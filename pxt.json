@@ -1,6 +1,6 @@
 {
     "name": "pxt-digole",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "description": "extension for 1.8 Serial:UART/I2C/SPI True Color TFT LCD 160x128",
     "dependencies": {
         "core": "*",
