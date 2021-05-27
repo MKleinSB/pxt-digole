@@ -1,7 +1,7 @@
 {
     "name": "pxt-digole",
     "version": "0.0.0",
-    "description": "",
+    "description": "extension for 1.8 Serial:UART/I2C/SPI True Color TFT LCD 160x128",
     "dependencies": {
         "core": "*",
         "radio": "*"
@@ -9,7 +9,8 @@
     "files": [
         "README.md",
         "main.blocks",
-        "main.ts"
+        "main.ts",
+        "digole.ts"
     ],
     "testFiles": [
         "test.ts"
@@ -18,5 +19,5 @@
     "supportedTargets": [
         "calliopemini"
     ],
-    "preferredEditor": "blocksprj"
+    "preferredEditor": "tsprj"
 }
