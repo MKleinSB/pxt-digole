@@ -1,12 +1,9 @@
-let buf2 = pins.createBuffer(2);
-let buf3 = pins.createBuffer(3);
-let buf4 = pins.createBuffer(4);
-
-// Extension for Digole LCD 
-// for Calliope mini and Microbit V1.0
-// MIT License
-// 26.05.2021 by Michael Klein
-// https://twitter.com/kleinswelt
+/** Extension for Digole LCD 
+ * for Calliope mini and Microbit
+ * CC by SA
+ * 28.05.2021 by Michael Klein
+ * https://twitter.com/kleinswelt
+ */
 
 declare const enum LCD_FONT {
     //% block="4x6"
@@ -49,6 +46,10 @@ namespace digole {
     let LCD_WIDTH = 160
     let LCD_HEIGHT = 128
 
+    let buf2 = pins.createBuffer(2);
+    let buf3 = pins.createBuffer(3);
+    let buf4 = pins.createBuffer(4);
+
     /**
      * Converts the color name to a number
      */
@@ -74,6 +75,30 @@ namespace digole {
         buf3.setNumber(NumberFormat.UInt8LE, 1, 10)
         buf3.setNumber(NumberFormat.UInt8LE, 2, font)
         serial.writeBuffer(buf3)
+    }
+
+    /**
+     * Sets textcurser in rows and columns
+     */
+   //% block="Set textposition columns %x | rows %y"
+    export function SetTextposition(x: number, y:number): void {
+        buf4.setNumber(NumberFormat.UInt8LE, 0, 27)
+        buf4.setNumber(NumberFormat.UInt8LE, 1, 24) //TP
+        buf4.setNumber(NumberFormat.UInt8LE, 2, x)
+        buf4.setNumber(NumberFormat.UInt8LE, 3, y)
+        serial.writeBuffer(buf4)
+    }
+
+   /**
+     * Sets textcurser in Pixels
+     */
+   //% block="Set textposition xpixel %x | ypixel %y"
+    export function SetTextpositionP(x: number, y:number): void {
+        buf4.setNumber(NumberFormat.UInt8LE, 0, 27)
+        buf4.setNumber(NumberFormat.UInt8LE, 1, 3) //ETP
+        buf4.setNumber(NumberFormat.UInt8LE, 2, x)
+        buf4.setNumber(NumberFormat.UInt8LE, 3, y)
+        serial.writeBuffer(buf4)
     }
 
   //% block="Setcolor %color"
@@ -111,11 +136,18 @@ namespace digole {
     }
 
     //% block="Write String %ch +LF"
-    export function DisString(ch: string): void {
+    export function DisStringLF(ch: string): void {
         buf2.setNumber(NumberFormat.UInt8LE, 0, 27)
         buf2.setNumber(NumberFormat.UInt8LE, 1, 1)
         serial.writeBuffer(buf2)
         serial.writeLine(ch);
     }
 
+   //% block="Write String %ch"
+    export function DisString(ch: string): void {
+        buf2.setNumber(NumberFormat.UInt8LE, 0, 27)
+        buf2.setNumber(NumberFormat.UInt8LE, 1, 1)
+        serial.writeBuffer(buf2)
+        serial.writeString(ch);
+    }
 }
