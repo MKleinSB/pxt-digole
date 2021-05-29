@@ -1,7 +1,7 @@
 /** Extension for Digole LCD 
  * for Calliope mini and Microbit
  * CC by SA
- * 28.05.2021 by Michael Klein
+ * 29.05.2021 by Michael Klein
  * https://twitter.com/kleinswelt
  */
 
@@ -49,16 +49,7 @@ namespace digole {
     let buf2 = pins.createBuffer(2);
     let buf3 = pins.createBuffer(3);
     let buf4 = pins.createBuffer(4);
-
-    /**
-     * Converts the color name to a number
-     */
-    //% blockId=LcdColor block="%c"
-    export function LcdColor(c: LCD_COLOR): number {
-        return c;
-    }
  
-
     /**
      * Clears the lcd screen with background color
      */
@@ -99,6 +90,23 @@ namespace digole {
         buf4.setNumber(NumberFormat.UInt8LE, 2, x)
         buf4.setNumber(NumberFormat.UInt8LE, 3, y)
         serial.writeBuffer(buf4)
+    }
+
+   //% block="draw circle xpixel %x | ypixel %y | radius %r| filled %filled"
+    //% inlineInputMode=inline  filled.shadow="toggleYesNo"
+    export function drawcircle(x: number, y:number, r: number, filled:boolean): void {
+        buf4.setNumber(NumberFormat.UInt8LE, 0, 27)
+        buf4.setNumber(NumberFormat.UInt8LE, 1, 29) //CC
+        buf4.setNumber(NumberFormat.UInt8LE, 2, x)
+        buf4.setNumber(NumberFormat.UInt8LE, 3, y)
+        serial.writeBuffer(buf4)
+        buf2.setNumber(NumberFormat.UInt8LE, 0, r)
+        if (filled) {
+            buf2.setNumber(NumberFormat.UInt8LE, 1, 1) 
+        } else {
+            buf2.setNumber(NumberFormat.UInt8LE, 1, 0) 
+        }
+        serial.writeBuffer(buf2)
     }
 
   //% block="Setcolor %color"
